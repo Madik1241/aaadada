@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Neon UI</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f1320, #05070d);
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* фон анимация */
+body::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0,255,255,0.03) 0px,
+    rgba(0,255,255,0.03) 2px,
+    transparent 2px,
+    transparent 40px
+  );
+  animation: moveBg 20s linear infinite;
+}
+
+@keyframes moveBg {
+  from { transform: translate(0,0); }
+  to { transform: translate(-200px,-200px); }
+}
+
+.container {
+  width: 900px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* карточка */
+.card {
+  background: rgba(20, 25, 40, 0.6);
+  border-radius: 15px;
+  padding: 30px 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,255,255,0.2);
+  transition: 0.3s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* неон рамка */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,255,255,0.2);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.card:hover::after {
+  opacity: 1;
+  box-shadow: 0 0 25px rgba(0,255,255,0.6);
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* фигура */
+.icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  border-radius: 10px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* движение */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* разные фигуры */
+.green {
+  background: #00ff9f;
+  box-shadow: 0 0 15px #00ff9f;
+}
+
+.blue {
+  background: #00eaff;
+  box-shadow: 0 0 15px #00eaff;
+}
+
+.purple {
+  background: #b700ff;
+  box-shadow: 0 0 15px #b700ff;
+  transform: rotate(45deg);
+}
+
+.red {
+  background: #ff3c5f;
+  box-shadow: 0 0 15px #ff3c5f;
+}
+
+.yellow {
+  background: #ffd000;
+  box-shadow: 0 0 15px #ffd000;
+}
+
+.cyan {
+  background: #00fff2;
+  box-shadow: 0 0 15px #00fff2;
+}
+
+/* текст */
+.title {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 6px;
+}
+
+.desc {
+  font-size: 12px;
+  color: #666;
+}
+
+/* слайдер */
+.slider {
+  margin-bottom: 40px;
+}
+
+input[type="range"] {
+  width: 200px;
+  accent-color: cyan;
+}
+
+.status {
+  margin-top: 10px;
+  color: #00eaff;
+  text-shadow: 0 0 8px #00eaff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="slider">
+    <input type="range" min="0" max="100" value="50" id="range">
+    <div class="status">STABLE</div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="icon green"></div>
+      <div class="title">WALL_SCAN</div>
+      <div class="desc">Scanning environment</div>
+    </div>
+
+    <div class="card">
+      <div class="icon blue"></div>
+      <div class="title">MAGNETIC_FIELD</div>
+      <div class="desc">Signal detection</div>
+    </div>
+
+    <div class="card">
+      <div class="icon purple"></div>
+      <div class="title">EXTRACTION_CORE</div>
+      <div class="desc">Data processing</div>
+    </div>
+
+    <div class="card">
+      <div class="icon red"></div>
+      <div class="title">CONTROL</div>
+      <div class="desc">Manual override</div>
+    </div>
+
+    <div class="card">
+      <div class="icon yellow"></div>
+      <div class="title">LIFE_SUPPORT</div>
+      <div class="desc">System monitoring</div>
+    </div>
+
+    <div class="card">
+      <div class="icon cyan"></div>
+      <div class="title">NETWORK</div>
+      <div class="desc">Connection check</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const range = document.getElementById("range");
+const status = document.querySelector(".status");
+
+range.addEventListener("input", () => {
+  if (range.value < 30) status.textContent = "LOW";
+  else if (range.value < 70) status.textContent = "STABLE";
+  else status.textContent = "HIGH";
+});
+</script>
+
+</body>
+</html>
